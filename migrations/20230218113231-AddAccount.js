@@ -13,16 +13,18 @@ module.exports = {
       username: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       email: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       password: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
       },
-      userId: {
+      user_id: {
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: 'Users',
@@ -31,11 +33,11 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
       },

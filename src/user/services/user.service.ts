@@ -1,17 +1,46 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { Users } from './entitys/user.entity';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
+import { Accounts } from '../entities/account.entity';
+import { Users } from '../entities/user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject('UsersRepository')
     private readonly usersRepository: typeof Users,
+    @Inject('AccountsRepository')
+    private readonly accountsRepository: typeof Accounts,
   ) {}
 
   public async create(data: CreateUserDto) {
-    return this.usersRepository.create(data);
+    return this.usersRepository.create(
+      {
+        firstName: data.firstname,
+        lastname: data.lastname,
+        gender: data.gender,
+        account: {
+          email: data.email,
+          username: data.username,
+          password: data.password,
+        },
+      },
+      {
+        include: [Accounts],
+      },
+    );
+  }
+
+  public async findByEmail(email: string) {
+    return await this.accountsRepository.findOne({
+      where: { email },
+    });
+  }
+
+  public async findByUsername(username: string) {
+    return await this.accountsRepository.findOne({
+      where: { username },
+    });
   }
 
   public async update(id: number, data: UpdateUserDto) {

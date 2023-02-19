@@ -6,8 +6,12 @@ import {
   CreatedAt,
   UpdatedAt,
   DataType,
+  HasOne,
+  ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
 import { Gender } from '../enums/gender.enum';
+import { Accounts } from './account.entity';
 
 @Table
 export class Users extends Model {
@@ -28,6 +32,9 @@ export class Users extends Model {
     type: DataType.ENUM(Gender.MAN, Gender.WOMAN, Gender.OTHER),
   })
   gender: Gender;
+
+  @HasOne(() => Accounts)
+  account: Accounts;
 
   @CreatedAt
   @Column({ field: 'created_at' })

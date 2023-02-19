@@ -10,6 +10,13 @@ export class SignUpDto {
   })
   email: string;
 
+  @ApiProperty({
+    description: 'Username',
+    nullable: false,
+    required: true,
+  })
+  username: string;
+
   @MinLength(6)
   @ApiProperty({
     description: 'User password',
