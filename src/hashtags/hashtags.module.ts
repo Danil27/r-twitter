@@ -7,6 +7,6 @@ import { HashtagsService } from './hashtags.service';
   imports: [UserModule],
   controllers: [],
   providers: [HashtagsService, ...hashtagsProviders],
-  exports: [HashtagsService],
+  exports: [HashtagsService, ...hashtagsProviders],
 })
 export class HashtagsModule {}

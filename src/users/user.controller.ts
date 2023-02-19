@@ -22,6 +22,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('me')
+  @ApiOperation({ summary: 'Get my profile' })
   @UseGuards(JwtGuard)
   @ApiBearerAuth()
   @ApiResponse({

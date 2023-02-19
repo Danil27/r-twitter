@@ -5,6 +5,7 @@ import {
   CreatedAt,
   DataType,
   ForeignKey,
+  UpdatedAt,
 } from 'sequelize-typescript';
 import { Users } from '../../users/entities/user.entity';
 
@@ -30,4 +31,8 @@ export class Hashtags extends Model {
   @CreatedAt
   @Column({ field: 'created_at' })
   createdAt: Date;
+
+  @UpdatedAt
+  @Column({ field: 'updated_at' })
+  updatedAt: Date;
 }

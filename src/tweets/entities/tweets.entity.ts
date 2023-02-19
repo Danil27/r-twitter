@@ -39,5 +39,5 @@ export class Tweets extends Model {
 
   @DeletedAt
   @Column({ field: 'deleted_at', allowNull: true })
-  deleted_at: Date;
+  deletedAt: Date;
 }

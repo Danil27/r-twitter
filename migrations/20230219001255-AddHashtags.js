@@ -12,6 +12,7 @@ module.exports = {
       },
       title: {
         type: Sequelize.DataTypes.STRING,
+        unique: true,
         allowNull: false,
       },
       description: {
@@ -26,6 +27,10 @@ module.exports = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
       },
       created_at: {
         allowNull: false,

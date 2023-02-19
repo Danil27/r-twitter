@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Hashtags_Tweets', {
+    return queryInterface.createTable('HashtagsTweets', {
       hashtag_id: {
         type: Sequelize.DataTypes.INTEGER,
         references: {
@@ -25,6 +25,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Hashtags_Tweets');
+    return queryInterface.dropTable('HashtagsTweets');
   },
 };

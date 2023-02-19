@@ -29,11 +29,11 @@ export class HashtagsService {
       throw new Error('User not found.');
     }
 
-    const [hashtag] = await this.hashtagsRepository.findOrCreate({
+    const [hashtag] = await this.hashtagsRepository.findOrCreate<Hashtags>({
       where: { title },
     });
 
-    return hashtag;
+    return hashtag.dataValues;
   }
 
   public async findById(id: number) {

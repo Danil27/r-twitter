@@ -1,6 +1,6 @@
 import { Table, Column, Model, ForeignKey } from 'sequelize-typescript';
-import { Hashtags } from './hashtags.entity';
-import { Tweets } from '../../tweets/entities/tweets.entity';
+import { Hashtags } from '../../hashtags/entities/hashtags.entity';
+import { Tweets } from './tweets.entity';
 
 @Table
 export class HashtagsTweets extends Model {
