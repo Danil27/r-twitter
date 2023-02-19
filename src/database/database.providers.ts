@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Sequelize } from 'sequelize-typescript';
-import { Accounts } from '../user/entities/account.entity';
-import { Users } from '../user/entities/user.entity';
+import { Accounts } from '../users/entities/account.entity';
+import { Users } from '../users/entities/user.entity';
 
 export const databaseProviders = [
   {

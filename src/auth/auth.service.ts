@@ -5,7 +5,7 @@ import { SignUpDto } from './dao/sign-up.dto';
 import { TokenDto } from './dao/token.dto';
 import { SignInDto } from './dao/sign-in.dto';
 import { ConfigService } from '@nestjs/config';
-import { UserService } from '../user/services/user.service';
+import { UserService } from '../users/services/user.service';
 
 @Injectable()
 export class AuthService {
