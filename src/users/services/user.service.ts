@@ -43,6 +43,14 @@ export class UserService {
     });
   }
 
+  public async findAccountByUserID(userId: number) {
+    return await this.accountsRepository.findOne({
+      where: {
+        userId,
+      },
+    });
+  }
+
   public async update(id: number, data: UpdateUserDto) {
     const user = await this.usersRepository.findByPk<Users>(id);
     if (!user) {
@@ -51,6 +59,26 @@ export class UserService {
     return this.usersRepository.update(data, {
       where: { id },
     });
+  }
+
+  public async updatePassword(userId: number, password: string) {
+    const account = await this.accountsRepository.findOne<Accounts>({
+      where: {
+        userId,
+      },
+    });
+    if (!account) {
+      throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+    }
+    await this.accountsRepository.update(
+      {
+        password,
+      },
+      {
+        where: { userId },
+      },
+    );
+    return true;
   }
 
   public async findById(id: number) {

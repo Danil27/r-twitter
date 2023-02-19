@@ -20,3 +20,6 @@
 1. Run `npm run migration:run`
 1. Run `npm run start:dev`
 
+
+## Api doc
+- [Swagger doc](http://localhost:3000/api#/)

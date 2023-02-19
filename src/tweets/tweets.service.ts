@@ -1,9 +1,11 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Hashtags } from '../hashtags/entities/hashtags.entity';
 import { HashtagsService } from 'src/hashtags/hashtags.service';
 import { Users } from '../users/entities/user.entity';
 import { CreateTweetDto } from './dto/create-tweet.dto';
-import { HashtagsTweets } from './entities/hashtags_tweets.entity';
+import { HashtagsTweets } from '../hashtags/entities/hashtags_tweets.entity';
 import { Tweets } from './entities/tweets.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class TweetsService {
@@ -43,5 +45,21 @@ export class TweetsService {
     this.hashtagsTweetsRepository.bulkCreate(hashtagsTweets);
 
     return undefined;
+  }
+
+  public async findById(id: number) {
+    return await this.tweetsRepository.findByPk<Tweets>(id, {
+      include: [Hashtags],
+    });
+  }
+
+  public async searchByTitle(title: string) {
+    return await this.tweetsRepository.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${title}%`,
+        },
+      },
+    });
   }
 }

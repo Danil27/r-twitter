@@ -5,14 +5,18 @@ import {
   Get,
   HttpStatus,
   Param,
-  Post,
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { CurrentUser } from '../helpers/request.helper';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from './entities/user.entity';
 import { UserService } from './services/user.service';
@@ -42,6 +46,7 @@ export class UserController {
   @Put()
   @ApiOperation({ summary: 'Update profile' })
   @UseGuards(JwtGuard)
+  @ApiBody({ type: UpdateUserDto })
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.OK,

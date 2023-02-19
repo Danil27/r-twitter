@@ -1,4 +1,12 @@
-import { Body, Controller, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -29,5 +37,17 @@ export class TweetsController {
     @Body() data: CreateTweetDto,
   ) {
     return await this.tweetsService.create(user.id, data);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Find tweeet by id' })
+  public async findByID(@Param('id') id: number) {
+    return this.tweetsService.findById(id);
+  }
+
+  @Get('/search/:title')
+  @ApiOperation({ summary: 'Search tweet by title' })
+  public async search(@Param('title') title: string) {
+    return this.tweetsService.searchByTitle(title);
   }
 }

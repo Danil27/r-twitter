@@ -7,8 +7,11 @@ import {
   DataType,
   ForeignKey,
   DeletedAt,
+  BelongsToMany,
 } from 'sequelize-typescript';
+import { Hashtags } from 'src/hashtags/entities/hashtags.entity';
 import { Users } from '../../users/entities/user.entity';
+import { HashtagsTweets } from '../../hashtags/entities/hashtags_tweets.entity';
 
 @Table
 export class Tweets extends Model {
@@ -28,6 +31,9 @@ export class Tweets extends Model {
   @ForeignKey(() => Users)
   @Column({ field: 'user_id' })
   userId: number;
+
+  @BelongsToMany(() => Hashtags, () => HashtagsTweets)
+  hashtags: Hashtags[];
 
   @CreatedAt
   @Column({ field: 'created_at' })

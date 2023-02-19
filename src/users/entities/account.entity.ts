@@ -29,8 +29,8 @@ export class Accounts extends Model {
   password: string;
 
   @ForeignKey(() => Users)
-  @Column
-  user_id: number;
+  @Column({ field: 'user_id' })
+  userId: number;
 
   @CreatedAt
   @Column({ field: 'created_at' })

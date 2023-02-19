@@ -1,7 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
+import sequelize from 'sequelize';
 import { Users } from '../users/entities/user.entity';
 import { CreateHashtagDto } from './dto/create-hashtags.dto';
 import { Hashtags } from './entities/hashtags.entity';
+import { HashtagsTweets } from './entities/hashtags_tweets.entity';
 
 @Injectable()
 export class HashtagsService {
@@ -10,6 +12,8 @@ export class HashtagsService {
     private readonly usersRepository: typeof Users,
     @Inject('HashtagsRepository')
     private readonly hashtagsRepository: typeof Hashtags,
+    @Inject('HashtagsTweetsRepository')
+    private readonly hashtagsTweetsRepository: typeof HashtagsTweets,
   ) {}
 
   public async create(userId: number, data: CreateHashtagDto) {
@@ -38,5 +42,18 @@ export class HashtagsService {
 
   public async findById(id: number) {
     return await this.hashtagsRepository.findByPk(id);
+  }
+
+  public async getTopicalHashtags() {
+    return await this.hashtagsTweetsRepository.findAll({
+      include: [Hashtags],
+      attributes: [
+        'hashtag.title',
+        [sequelize.fn('COUNT', sequelize.col('hashtag.id')), 'hashtag_count'],
+      ],
+      order: [['createdAt', 'ASC']],
+      group: ['hashtag.id', 'createdAt'],
+      limit: 5,
+    });
   }
 }

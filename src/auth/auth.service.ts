@@ -6,6 +6,7 @@ import { TokenDto } from './dao/token.dto';
 import { SignInDto } from './dao/sign-in.dto';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from '../users/services/user.service';
+import { UpdPasswordDto } from './dao/upd-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,22 @@ export class AuthService {
     this.jwt_secret = this.configService.get('jwt_secret');
   }
 
-  async signUp(signUpDto: SignUpDto): Promise<TokenDto> {
+  public async updatePassword(userId: number, data: UpdPasswordDto) {
+    const { password, new_password } = data;
+    const account = await this.usersService.findAccountByUserID(userId);
+    if (!account) {
+      throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+    }
+    if (!(await bcrypt.compare(password, account.password)))
+      throw new HttpException(
+        'Password was entered incorrectly',
+        HttpStatus.UNAUTHORIZED,
+      );
+    await this.usersService.updatePassword(userId, new_password);
+    return true;
+  }
+
+  public async signUp(signUpDto: SignUpDto): Promise<TokenDto> {
     const { id } = await this.usersService.create({
       ...signUpDto,
       password: await bcrypt.hash(signUpDto.password, 10),
@@ -27,7 +43,7 @@ export class AuthService {
     return this.generateTokens(id);
   }
 
-  async signIn(signInDto: SignInDto): Promise<TokenDto> {
+  public async signIn(signInDto: SignInDto): Promise<TokenDto> {
     const user = signInDto.email
       ? await this.usersService.findByEmail(signInDto.email)
       : await this.usersService.findByUsername(signInDto.username);
@@ -44,7 +60,7 @@ export class AuthService {
         HttpStatus.UNAUTHORIZED,
       );
 
-    return this.generateTokens(user.user_id);
+    return this.generateTokens(user.userId);
   }
 
   private generateTokens(userId: number): TokenDto {

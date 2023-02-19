@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Sequelize } from 'sequelize-typescript';
 import { Hashtags } from '../hashtags/entities/hashtags.entity';
-import { HashtagsTweets } from '../tweets/entities/hashtags_tweets.entity';
+import { HashtagsTweets } from '../hashtags/entities/hashtags_tweets.entity';
 import { Tweets } from '../tweets/entities/tweets.entity';
 import { Accounts } from '../users/entities/account.entity';
 import { Users } from '../users/entities/user.entity';
