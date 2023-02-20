@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
-import sequelize from 'sequelize';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import sequelize, { Op } from 'sequelize';
 import { Users } from '../users/entities/user.entity';
 import { CreateHashtagDto } from './dto/create-hashtags.dto';
+import { UpdateHashtagDto } from './dto/update-hashtag.dto';
 import { Hashtags } from './entities/hashtags.entity';
 import { HashtagsTweets } from './entities/hashtags_tweets.entity';
 
@@ -34,6 +35,7 @@ export class HashtagsService {
     }
 
     const [hashtag] = await this.hashtagsRepository.findOrCreate<Hashtags>({
+      defaults: { userId, title },
       where: { title },
     });
 
@@ -54,6 +56,54 @@ export class HashtagsService {
       order: [['createdAt', 'ASC']],
       group: ['hashtag.id', 'createdAt'],
       limit: 5,
+    });
+  }
+
+  public async update(userId, data: UpdateHashtagDto) {
+    const { title, description, id } = data;
+    const user = await this.usersRepository.findByPk<Users>(userId);
+    if (!user) {
+      throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+    }
+
+    const hashtag = await this.hashtagsRepository.findByPk<Hashtags>(id);
+    if (!hashtag || hashtag.userId !== userId) {
+      throw new HttpException('Hashtag not found.', HttpStatus.NOT_FOUND);
+    }
+
+    return this.hashtagsRepository.update(
+      {
+        title,
+        description,
+      },
+      {
+        where: { id },
+      },
+    );
+  }
+
+  public async delete(userId, hashtagId: number) {
+    const user = await this.usersRepository.findByPk<Users>(userId);
+    if (!user) {
+      throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+    }
+
+    const hashtag = await this.hashtagsRepository.findByPk<Hashtags>(hashtagId);
+    if (!hashtag || hashtag.userId !== userId) {
+      throw new HttpException('Hashtag not found.', HttpStatus.NOT_FOUND);
+    }
+    return await this.hashtagsRepository.destroy({
+      where: { id: hashtagId },
+    });
+  }
+
+  public async searchByTitle(title: string) {
+    return await this.hashtagsRepository.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${title}%`,
+        },
+      },
     });
   }
 }

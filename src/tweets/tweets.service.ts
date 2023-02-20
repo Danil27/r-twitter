@@ -44,7 +44,7 @@ export class TweetsService {
 
     this.hashtagsTweetsRepository.bulkCreate(hashtagsTweets);
 
-    return undefined;
+    return tweet;
   }
 
   public async findById(id: number) {
@@ -61,5 +61,29 @@ export class TweetsService {
         },
       },
     });
+  }
+
+  public async searchByHashtag(title: string) {
+    const hashtagIds = (await this.hashtagsService.searchByTitle(title)).map(
+      (h) => h.dataValues.id,
+    );
+
+    const twitIds = (
+      await this.hashtagsTweetsRepository.findAll({
+        attributes: ['tweetId'],
+        where: {
+          hashtagId: hashtagIds,
+        },
+      })
+    ).map((t) => t.dataValues.tweetId);
+
+    return (
+      await this.tweetsRepository.findAll({
+        include: [Hashtags],
+        where: {
+          id: twitIds,
+        },
+      })
+    ).map((twit) => twit.dataValues);
   }
 }

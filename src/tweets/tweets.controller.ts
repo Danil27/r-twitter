@@ -45,9 +45,15 @@ export class TweetsController {
     return this.tweetsService.findById(id);
   }
 
-  @Get('/search/:title')
+  @Get('/search/title/:title')
   @ApiOperation({ summary: 'Search tweet by title' })
   public async search(@Param('title') title: string) {
     return this.tweetsService.searchByTitle(title);
+  }
+
+  @Get('/search/hashtag/:hashtag')
+  @ApiOperation({ summary: 'Search tweet by hashtag' })
+  public async searchByHashtag(@Param('hashtag') hashtag: string) {
+    return this.tweetsService.searchByHashtag(hashtag);
   }
 }
