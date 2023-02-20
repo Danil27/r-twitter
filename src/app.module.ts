@@ -6,6 +6,7 @@ import configuration from './config/configuration';
 import { DatabaseModule } from './database/database.module';
 import { HashtagsModule } from './hashtags/hashtags.module';
 import { LikesModule } from './likes/likes.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { TweetsModule } from './tweets/tweets.module';
 import { UserModule } from './users/user.module';
 
@@ -22,6 +23,7 @@ import { UserModule } from './users/user.module';
     HashtagsModule,
     LikesModule,
     CommentsModule,
+    SubscriptionsModule,
   ],
   controllers: [],
   providers: [],

@@ -7,6 +7,7 @@ import { Tweets } from '../tweets/entities/tweets.entity';
 import { Accounts } from '../users/entities/account.entity';
 import { Users } from '../users/entities/user.entity';
 import { Comments } from '../comments/comments.entity';
+import { Subscriptions } from '../subscriptions/subscriptions.entity';
 
 export const databaseProviders = [
   {
@@ -30,6 +31,7 @@ export const databaseProviders = [
         HashtagsTweets,
         Likes,
         Comments,
+        Subscriptions,
       ]);
       await sequelize.sync();
       return sequelize;
