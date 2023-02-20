@@ -15,6 +15,7 @@ import { Hashtags } from '../../hashtags/entities/hashtags.entity';
 import { Users } from '../../users/entities/user.entity';
 import { HashtagsTweets } from '../../hashtags/entities/hashtags_tweets.entity';
 import { Likes } from 'src/likes/likes.entity';
+import { Comments } from 'src/comments/comments.entity';
 
 @Table
 export class Tweets extends Model {
@@ -40,6 +41,9 @@ export class Tweets extends Model {
 
   @HasMany(() => Likes)
   likes: Likes[];
+
+  @HasMany(() => Comments)
+  comments: Comments[];
 
   @BelongsTo(() => Users)
   creator: Users;

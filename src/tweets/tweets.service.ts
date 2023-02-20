@@ -6,7 +6,8 @@ import { CreateTweetDto } from './dto/create-tweet.dto';
 import { HashtagsTweets } from '../hashtags/entities/hashtags_tweets.entity';
 import { Tweets } from './entities/tweets.entity';
 import { Op } from 'sequelize';
-import { Likes } from 'src/likes/likes.entity';
+import { Likes } from '../likes/likes.entity';
+import { Comments } from '../comments/comments.entity';
 
 @Injectable()
 export class TweetsService {
@@ -25,7 +26,7 @@ export class TweetsService {
       limit: 10,
       offset: offset,
       order: [['createdAt', 'DESC']],
-      include: [Hashtags, Likes, Users],
+      include: [Hashtags, Likes, Users, Comments],
     });
   }
 
@@ -59,7 +60,7 @@ export class TweetsService {
 
   public async findById(id: number) {
     return await this.tweetsRepository.findByPk<Tweets>(id, {
-      include: [Hashtags, Likes, Users],
+      include: [Hashtags, Likes, Users, Comments],
     });
   }
 
