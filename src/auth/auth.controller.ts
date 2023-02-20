@@ -17,7 +17,7 @@ import { AuthService } from './auth.service';
 import { SignUpDto } from './dao/sign-up.dto';
 import { TokenDto } from './dao/token.dto';
 import { SignInDto } from './dao/sign-in.dto';
-import { CurrentUser } from 'src/helpers/request.helper';
+import { CurrentUser } from '../helpers/request.helper';
 import { UpdPasswordDto } from './dao/upd-password.dto';
 import { Users } from '../users/entities/user.entity';
 import { JwtGuard } from './guards/jwt.guard';

@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Hashtags } from '../hashtags/entities/hashtags.entity';
-import { HashtagsService } from 'src/hashtags/hashtags.service';
+import { HashtagsService } from '../hashtags/hashtags.service';
 import { Users } from '../users/entities/user.entity';
 import { CreateTweetDto } from './dto/create-tweet.dto';
 import { HashtagsTweets } from '../hashtags/entities/hashtags_tweets.entity';
 import { Tweets } from './entities/tweets.entity';
 import { Op } from 'sequelize';
+import { Likes } from 'src/likes/likes.entity';
 
 @Injectable()
 export class TweetsService {
@@ -18,6 +19,15 @@ export class TweetsService {
     private readonly hashtagsTweetsRepository: typeof HashtagsTweets,
     private readonly hashtagsService: HashtagsService,
   ) {}
+
+  public async getTweets(offset = 0) {
+    return await this.tweetsRepository.findAll({
+      limit: 10,
+      offset: offset,
+      order: [['createdAt', 'DESC']],
+      include: [Hashtags, Likes, Users],
+    });
+  }
 
   public async create(userId: number, data: CreateTweetDto) {
     const user = await this.usersRepository.findByPk<Users>(userId);
@@ -49,7 +59,7 @@ export class TweetsService {
 
   public async findById(id: number) {
     return await this.tweetsRepository.findByPk<Tweets>(id, {
-      include: [Hashtags],
+      include: [Hashtags, Likes, Users],
     });
   }
 

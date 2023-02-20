@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { Sequelize } from 'sequelize-typescript';
+import { Likes } from '../likes/likes.entity';
 import { Hashtags } from '../hashtags/entities/hashtags.entity';
 import { HashtagsTweets } from '../hashtags/entities/hashtags_tweets.entity';
 import { Tweets } from '../tweets/entities/tweets.entity';
@@ -20,7 +21,14 @@ export const databaseProviders = [
         password: configService.get('database.password'),
         database: configService.get('database.database'),
       });
-      sequelize.addModels([Users, Accounts, Hashtags, Tweets, HashtagsTweets]);
+      sequelize.addModels([
+        Users,
+        Accounts,
+        Hashtags,
+        Tweets,
+        HashtagsTweets,
+        Likes,
+      ]);
       await sequelize.sync();
       return sequelize;
     },

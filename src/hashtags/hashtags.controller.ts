@@ -15,7 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/guards/jwt.guard';
-import { CurrentUser } from 'src/helpers/request.helper';
+import { CurrentUser } from '../helpers/request.helper';
 import { Users } from '../users/entities/user.entity';
 import { HashtagsService } from './hashtags.service';
 import { UpdateHashtagDto } from './dto/update-hashtag.dto';

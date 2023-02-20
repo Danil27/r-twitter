@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { DatabaseModule } from './database/database.module';
 import { HashtagsModule } from './hashtags/hashtags.module';
+import { LikesModule } from './likes/likes.module';
 import { TweetsModule } from './tweets/tweets.module';
 import { UserModule } from './users/user.module';
 
@@ -18,6 +19,7 @@ import { UserModule } from './users/user.module';
     AuthModule,
     TweetsModule,
     HashtagsModule,
+    LikesModule,
   ],
   controllers: [],
   providers: [],

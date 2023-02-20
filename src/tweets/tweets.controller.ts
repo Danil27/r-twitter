@@ -40,9 +40,15 @@ export class TweetsController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Find tweeet by id' })
+  @ApiOperation({ summary: 'Find tweet by id' })
   public async findByID(@Param('id') id: number) {
     return this.tweetsService.findById(id);
+  }
+
+  @Get('all/:offset')
+  @ApiOperation({ summary: 'Find all tweets' })
+  public async findAll(@Param('offset') offset: number) {
+    return this.tweetsService.getTweets(offset);
   }
 
   @Get('/search/title/:title')

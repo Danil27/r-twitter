@@ -8,10 +8,13 @@ import {
   ForeignKey,
   DeletedAt,
   BelongsToMany,
+  HasMany,
+  BelongsTo,
 } from 'sequelize-typescript';
-import { Hashtags } from 'src/hashtags/entities/hashtags.entity';
+import { Hashtags } from '../../hashtags/entities/hashtags.entity';
 import { Users } from '../../users/entities/user.entity';
 import { HashtagsTweets } from '../../hashtags/entities/hashtags_tweets.entity';
+import { Likes } from 'src/likes/likes.entity';
 
 @Table
 export class Tweets extends Model {
@@ -34,6 +37,12 @@ export class Tweets extends Model {
 
   @BelongsToMany(() => Hashtags, () => HashtagsTweets)
   hashtags: Hashtags[];
+
+  @HasMany(() => Likes)
+  likes: Likes[];
+
+  @BelongsTo(() => Users)
+  creator: Users;
 
   @CreatedAt
   @Column({ field: 'created_at' })
