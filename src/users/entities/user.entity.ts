@@ -7,11 +7,7 @@ import {
   UpdatedAt,
   DataType,
   HasOne,
-  ForeignKey,
-  BelongsTo,
-  BelongsToMany,
 } from 'sequelize-typescript';
-import { Subscriptions } from 'src/subscriptions/subscriptions.entity';
 import { Gender } from '../enums/gender.enum';
 import { Accounts } from './account.entity';
 
@@ -48,5 +44,5 @@ export class Users extends Model {
 
   @DeletedAt
   @Column({ field: 'deleted_at', allowNull: true })
-  deleted_at: Date;
+  deletedAt: Date;
 }

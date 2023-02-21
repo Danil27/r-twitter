@@ -1,5 +1,8 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Op } from 'sequelize';
+import { NotificationCreateEvent } from 'src/notifications/dto/create-notification.dto';
+import { NotificationsType } from '../notifications/enums/notifications-type.enum';
 import { Tweets } from '../tweets/entities/tweets.entity';
 import { Users } from '../users/entities/user.entity';
 import { Likes } from './likes.entity';
@@ -13,6 +16,7 @@ export class LikesService {
     private readonly usersRepository: typeof Users,
     @Inject('TweetsRepository')
     private readonly tweetsRepository: typeof Tweets,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   public async like(userId: number, tweetId: number) {
@@ -44,6 +48,12 @@ export class LikesService {
       userId,
       tweetId,
     });
+
+    this.eventEmitter.emit('tweet.like', {
+      type: NotificationsType.LIKE,
+      fromUserId: userId,
+      toUserId: tweet.userId,
+    } as NotificationCreateEvent);
 
     return true;
   }

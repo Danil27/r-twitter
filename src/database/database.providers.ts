@@ -8,6 +8,7 @@ import { Accounts } from '../users/entities/account.entity';
 import { Users } from '../users/entities/user.entity';
 import { Comments } from '../comments/comments.entity';
 import { Subscriptions } from '../subscriptions/subscriptions.entity';
+import { Notifications } from '../notifications/notifications.entity';
 
 export const databaseProviders = [
   {
@@ -32,6 +33,7 @@ export const databaseProviders = [
         Likes,
         Comments,
         Subscriptions,
+        Notifications,
       ]);
       await sequelize.sync();
       return sequelize;

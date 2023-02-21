@@ -14,8 +14,8 @@ import {
 import { Hashtags } from '../../hashtags/entities/hashtags.entity';
 import { Users } from '../../users/entities/user.entity';
 import { HashtagsTweets } from '../../hashtags/entities/hashtags_tweets.entity';
-import { Likes } from 'src/likes/likes.entity';
-import { Comments } from 'src/comments/comments.entity';
+import { Likes } from '../../likes/likes.entity';
+import { Comments } from '../../comments/comments.entity';
 
 @Table
 export class Tweets extends Model {
