@@ -7,6 +7,9 @@ import { SignInDto } from './dao/sign-in.dto';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from '../users/services/user.service';
 import { UpdPasswordDto } from './dao/upd-password.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { NotificationsType } from '../notifications/enums/notifications-type.enum';
+import { NotificationCreateEvent } from '../notifications/dto/create-notification.dto';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +18,7 @@ export class AuthService {
     private readonly usersService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private eventEmitter: EventEmitter2,
   ) {
     this.jwt_secret = this.configService.get('jwt_secret');
   }
@@ -39,6 +43,11 @@ export class AuthService {
       ...signUpDto,
       password: await bcrypt.hash(signUpDto.password, 10),
     });
+
+    this.eventEmitter.emit('system.register', {
+      type: NotificationsType.SYSTEM,
+      toUserId: id,
+    } as NotificationCreateEvent);
 
     return this.generateTokens(id);
   }

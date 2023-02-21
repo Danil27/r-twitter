@@ -1,4 +1,7 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { NotificationCreateEvent } from '../notifications/dto/create-notification.dto';
+import { NotificationsType } from '../notifications/enums/notifications-type.enum';
 import { Tweets } from '../tweets/entities/tweets.entity';
 import { Users } from '../users/entities/user.entity';
 import { Comments } from './comments.entity';
@@ -12,6 +15,7 @@ export class CommentsService {
     private readonly tweetsRepository: typeof Tweets,
     @Inject('CommentsRepository')
     private readonly commentsRepository: typeof Comments,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   public async create(userId: number, tweetId: number, comment: string) {
@@ -29,6 +33,12 @@ export class CommentsService {
       tweetId,
       comment,
     });
+
+    this.eventEmitter.emit('tweet.comment', {
+      type: NotificationsType.COMMENT,
+      fromUserId: userId,
+      toUserId: tweet.userId,
+    } as NotificationCreateEvent);
 
     return true;
   }

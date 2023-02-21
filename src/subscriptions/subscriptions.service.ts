@@ -1,5 +1,8 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Op } from 'sequelize';
+import { NotificationCreateEvent } from '../notifications/dto/create-notification.dto';
+import { NotificationsType } from '../notifications/enums/notifications-type.enum';
 import { Users } from '../users/entities/user.entity';
 import { Subscriptions } from './subscriptions.entity';
 
@@ -10,6 +13,7 @@ export class SubscriptionsService {
     private readonly usersRepository: typeof Users,
     @Inject('SubscriptionsRepository')
     private readonly subscriptionsRepository: typeof Subscriptions,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   public async subscribe(userId: number, authorId: number) {
@@ -27,6 +31,12 @@ export class SubscriptionsService {
       subscriberId: userId,
       userId: authorId,
     });
+
+    this.eventEmitter.emit('subscriptions.subscribe', {
+      type: NotificationsType.COMMENT,
+      fromUserId: userId,
+      toUserId: authorId,
+    } as NotificationCreateEvent);
 
     return true;
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { UserService } from 'src/users/services/user.service';
+import { UserService } from '../../users/services/user.service';
 import { NotificationCreateEvent } from '../dto/create-notification.dto';
 import { NotificationsService } from '../notifications.service';
 
@@ -12,7 +12,7 @@ export class TweetListener {
   ) {}
 
   @OnEvent('tweet.like')
-  async handleOrderCreatedEvent(event: NotificationCreateEvent) {
+  async handleLikeEvent(event: NotificationCreateEvent) {
     if (!event.toUserId && !event.toUserId) {
       throw new Error('Error create tweet.like event');
     }
@@ -24,6 +24,22 @@ export class TweetListener {
       ...event,
       title: 'New like',
       body: `${username || 'User'} liked your tweet.`,
+    });
+  }
+
+  @OnEvent('tweet.comment')
+  async handleCommentEvent(event: NotificationCreateEvent) {
+    if (!event.toUserId && !event.toUserId) {
+      throw new Error('Error create tweet.comment event');
+    }
+    const { username } = await this.usersService.findAccountByUserID(
+      event.fromUserId,
+    );
+
+    this.notificationsService.create({
+      ...event,
+      title: 'New comment',
+      body: `${username || 'User'} commented your tweet.`,
     });
   }
 }

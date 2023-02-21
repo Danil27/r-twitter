@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Op } from 'sequelize';
-import { NotificationCreateEvent } from 'src/notifications/dto/create-notification.dto';
+import { NotificationCreateEvent } from '../notifications/dto/create-notification.dto';
 import { NotificationsType } from '../notifications/enums/notifications-type.enum';
 import { Tweets } from '../tweets/entities/tweets.entity';
 import { Users } from '../users/entities/user.entity';
