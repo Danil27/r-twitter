@@ -9,7 +9,9 @@ import {
   HasOne,
   ForeignKey,
   BelongsTo,
+  BelongsToMany,
 } from 'sequelize-typescript';
+import { Subscriptions } from 'src/subscriptions/subscriptions.entity';
 import { Gender } from '../enums/gender.enum';
 import { Accounts } from './account.entity';
 

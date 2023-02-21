@@ -31,6 +31,10 @@ export class SubscriptionsService {
     return true;
   }
   public async unsubscribe(userId: number, authorId: number) {
+    if (userId === authorId) {
+      throw new HttpException('Error subscribe.', HttpStatus.BAD_REQUEST);
+    }
+
     const user = await this.usersRepository.findByPk<Users>(userId);
     if (!user) {
       throw new HttpException('User not found.', HttpStatus.BAD_REQUEST);
@@ -61,5 +65,34 @@ export class SubscriptionsService {
     });
 
     return true;
+  }
+
+  public async getSubscriptions(subscriberId: number) {
+    const authorIds = await this.subscriptionsRepository.findAll<Subscriptions>(
+      {
+        attributes: ['userId'],
+        where: {
+          subscriberId,
+        },
+      },
+    );
+
+    return this.usersRepository.findAll({
+      where: { id: authorIds.map((s) => s.userId) },
+    });
+  }
+
+  public async getSubscribers(userId: number) {
+    const subscribers =
+      await this.subscriptionsRepository.findAll<Subscriptions>({
+        attributes: ['subscriberId'],
+        where: {
+          userId,
+        },
+      });
+
+    return this.usersRepository.findAll({
+      where: { id: subscribers.map((s) => s.subscriberId) },
+    });
   }
 }

@@ -6,6 +6,11 @@ import {
   DataType,
   ForeignKey,
   UpdatedAt,
+  HasMany,
+  BelongsToMany,
+  HasOne,
+  BelongsTo,
+  BelongsToManyAssociation,
 } from 'sequelize-typescript';
 import { Users } from '../users/entities/user.entity';
 
