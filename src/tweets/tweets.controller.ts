@@ -1,11 +1,14 @@
 import {
   Body,
+  CacheInterceptor,
+  CacheTTL,
   Controller,
   Get,
   HttpStatus,
   Param,
   Post,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -39,12 +42,16 @@ export class TweetsController {
     return await this.tweetsService.create(user.id, data);
   }
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
   @Get(':id')
   @ApiOperation({ summary: 'Find tweet by id' })
   public async findByID(@Param('id') id: number) {
     return this.tweetsService.findById(id);
   }
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
   @Get('all/:offset')
   @ApiOperation({ summary: 'Find all tweets' })
   public async findAll(@Param('offset') offset: number) {

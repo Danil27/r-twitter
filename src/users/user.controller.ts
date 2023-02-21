@@ -1,5 +1,7 @@
 import {
   Body,
+  CacheInterceptor,
+  CacheTTL,
   Controller,
   Delete,
   Get,
@@ -7,6 +9,7 @@ import {
   Param,
   Put,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -25,6 +28,8 @@ import { UserService } from './services/user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
   @Get('me')
   @ApiOperation({ summary: 'Get my profile' })
   @UseGuards(JwtGuard)
@@ -37,6 +42,8 @@ export class UserController {
     return this.userService.findById(user.id);
   }
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
   @Get(':id')
   @ApiOperation({ summary: 'Find user by id' })
   public async findByID(@Param('id') id: number) {

@@ -1,5 +1,7 @@
 import {
-    Body,
+  Body,
+  CacheInterceptor,
+  CacheTTL,
   Controller,
   Delete,
   Get,
@@ -7,6 +9,7 @@ import {
   Param,
   Put,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -25,6 +28,8 @@ import { UpdateHashtagDto } from './dto/update-hashtag.dto';
 export class HashtagsController {
   constructor(private readonly hashtagsService: HashtagsService) {}
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
   @Get('/topical')
   @ApiOperation({ summary: 'Get topical hashtags' })
   public async topical() {
@@ -58,6 +63,8 @@ export class HashtagsController {
     return this.hashtagsService.delete(user.id, id);
   }
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
   @Get('/search/:title')
   @ApiOperation({ summary: 'Search hashtag by title' })
   public async searchByTitle(@Param('title') title: string) {
