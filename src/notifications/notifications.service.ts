@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Op } from 'sequelize';
 import { NotificationCreateEvent } from './dto/create-notification.dto';
 import { Notifications } from './notifications.entity';
 
@@ -14,10 +15,9 @@ export class NotificationsService {
   }
 
   public async findNotifications(userId: number) {
-    return this.notificationsRepository.findAll({
+    return this.notificationsRepository.findAll<Notifications>({
       where: {
-        toUserId: userId,
-        isRead: false,
+        [Op.and]: [{ toUserId: userId }, { isRead: false }],
       },
     });
   }

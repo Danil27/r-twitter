@@ -36,4 +36,44 @@ export const PetrUser: UserFixture = {
   username: 'petya',
   password: 'qwerty123',
 };
-export const usersFixture = [MaxUser, IlyaUser, VasyaUser, PetrUser];
+
+export const IvanUser: UserFixture = {
+  id: 4,
+  lastname: 'Ivan',
+  email: 'Ivan@gmail.com',
+  username: 'Ivan',
+  password: 'qwerty123',
+};
+
+export const SergeyUser: UserFixture = {
+  id: 5,
+  lastname: 'Serj',
+  email: 'Serj@gmail.com',
+  username: 'Serj',
+  password: 'qwerty123',
+};
+
+export const Anna: UserFixture = {
+  id: 6,
+  lastname: 'Anna',
+  email: 'anya@gmail.com',
+  username: 'annya',
+  password: 'qwerty123',
+};
+
+export const Kristy: UserFixture = {
+  id: 7,
+  lastname: 'Kristy',
+  email: 'krys@gmail.com',
+  username: 'kristy',
+  password: 'qwerty123',
+};
+
+export const usersFixture = [
+  MaxUser,
+  IlyaUser,
+  VasyaUser,
+  PetrUser,
+  IvanUser,
+  SergeyUser,
+];
