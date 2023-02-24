@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 
 export class UpdateHashtagDto {
   @ApiProperty({
@@ -13,6 +14,7 @@ export class UpdateHashtagDto {
     nullable: true,
     required: false,
   })
+  @IsOptional()
   title?: string;
 
   @ApiProperty({
