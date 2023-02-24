@@ -20,7 +20,16 @@
 1. Run `npm run migration:run`
 1. Run `npm run start:dev`
 
+##
+1. Скопировать файл `.env.example` в `.env` добавить настройки для подключения к базе и другие параметры.
+1. Установить npm зависимости командой `npm ci` не `npm i` т.к. версии зависимиостей могут поменятся.
+1. Запустить docker командой `docker-compose up -d` (запустятся 2 контейнера redis и postges).
+1. Запустить миграции командой `npm run migration:run`, создаются таблицы в бд для работы приложения.
+1. Запустить приложение командой `npm run start:dev`
+### Документация `swagger` находится по url: `http://localhost:3000/api`
 
+## Тесты
+Тесты запускаются командой `npm run test`
 ## Api doc
 - [Swagger doc](http://localhost:3000/api#/)
 
