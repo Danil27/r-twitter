@@ -22,6 +22,14 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

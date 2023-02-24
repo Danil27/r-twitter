@@ -4,6 +4,8 @@ import {
   Model,
   ForeignKey,
   BelongsTo,
+  CreatedAt,
+  UpdatedAt,
 } from 'sequelize-typescript';
 import { Tweets } from '../../tweets/entities/tweets.entity';
 import { Hashtags } from './hashtags.entity';
@@ -20,4 +22,12 @@ export class HashtagsTweets extends Model {
 
   @BelongsTo(() => Hashtags)
   hashtag: Hashtags;
+
+  @CreatedAt
+  @Column({ field: 'created_at' })
+  createdAt: Date;
+
+  @UpdatedAt
+  @Column({ field: 'updated_at' })
+  updatedAt: Date;
 }
