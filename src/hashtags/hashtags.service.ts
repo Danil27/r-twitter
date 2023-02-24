@@ -52,10 +52,8 @@ export class HashtagsService {
       attributes: [
         'hashtag.title',
         [sequelize.fn('COUNT', sequelize.col('hashtag.id')), 'hashtag_count'],
-        'createdAt',
       ],
-      order: [['createdAt', 'ASC']],
-      group: ['hashtag.id', 'createdAt'],
+      group: ['hashtag.id'],
       limit: 5,
     });
   }
