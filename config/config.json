@@ -1,24 +1,24 @@
 {
   "development": {
-    "username": "r-twitter",
+    "username": "postgres",
     "password": "psss11rwere",
-    "database": "r-twitter",
+    "database": "postgres",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port": 5432
   },
   "test": {
-    "username": "r-twitter",
+    "username": "postgres",
     "password": "psss11rwere",
-    "database": "r-twitter",
+    "database": "postgres",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port": 5432
   },
   "production": {
-    "username": "r-twitter",
+    "username": "postgres",
     "password": "psss11rwere",
-    "database": "r-twitter",
+    "database": "postgres",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port": 5432

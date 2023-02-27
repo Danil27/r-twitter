@@ -1,15 +1,18 @@
-version: '3.1'
+version: '3.4'
 
 services:
   postgres:
     container_name: r_twitter_postgres
     image: postgres:latest
     ports:
-      - '${POSTGRES_PORT}:5432'
+      - 5432:5432
     volumes:
-      - postgres:/data/postgres
-    env_file:
-      - .env
+      - ./postgres:/data/pg
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: psss11rwere
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
     networks:
       - postgres
 
